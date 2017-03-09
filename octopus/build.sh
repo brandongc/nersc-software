@@ -4,7 +4,7 @@ set -e
 source ./env.sh
 bash ./download.sh
 
-logfile=$PKGROOT/log/build.$TAG.$V.log
+logfile=$PKGROOT/build.$TAG.$V.log
 {
     export TMPDIR=$SCRATCH
     BUILDDIR=$(mktemp -d --tmpdir $NAME.$V.XXXXXXX)
@@ -37,4 +37,5 @@ logfile=$PKGROOT/log/build.$TAG.$V.log
     make install
     
     rm -r $BUILDDIR
-} > $logfile 2>&1
+
+} 2>&1 | tee $logfile

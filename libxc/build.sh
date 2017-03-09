@@ -4,7 +4,7 @@ set -e
 source ./env.sh
 bash ./download.sh
 
-logfile=$PKGROOT/log/build.$TAG-$V.txt
+logfile=$PKGROOT/build.$TAG-$V.txt
 {
     BUILDDIR=$(mktemp -d --tmpdir $NAME.$V.XXXXXXX)
     echo "build dir: "$BUILDDIR && cd $BUILDDIR
@@ -15,4 +15,5 @@ logfile=$PKGROOT/log/build.$TAG-$V.txt
     make -j $NJOB
     make install    
 
-} > $logfile 2>&1
+} 2>&1 | tee $logfile
+

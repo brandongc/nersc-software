@@ -4,7 +4,7 @@ set -e
 source ./env.sh
 bash ./download.sh
 
-logfile=$PKGROOT/log/build.$TAG-$V.txt
+logfile=$PKGROOT/build.$TAG-$V.txt
 {
     BUILDDIR=$(mktemp -d --tmpdir $NAME.$V.$PE.$TG.XXXXXXX)
     echo "build dir: "$BUILDDIR && cd $BUILDDIR
@@ -18,4 +18,5 @@ logfile=$PKGROOT/log/build.$TAG-$V.txt
     unset CRAYPE_LINK_TYPE
 
     rm -r $BUILDDIR
-} > $logfile 2>&1
+
+} 2>&1 | tee $logfile

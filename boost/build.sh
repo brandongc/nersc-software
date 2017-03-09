@@ -56,7 +56,7 @@ build_boost () {
     PE=$1
     TG=$2
 
-    logfile=$PKGROOT/log/boost.$V.$TAG.$PE.$TG.txt
+    logfile=$PKGROOT/boost.$V.$TAG.$PE.$TG.txt
     {
 	BUILDDIR=$(mktemp -d --tmpdir $NAME.$V.$PE.$TG.XXXXXXX)
 	echo "build dir: "$BUILDDIR && cd $BUILDDIR
@@ -70,7 +70,7 @@ build_boost () {
 	./b2 install --toolset=$(tools $PE) -j $NJOBS
 	[[ -n "$custom_jam" ]] && rm $custom_jam
 	rm -r $BUILDDIR	
-    } > $logfile 2>&1
+    } 2>&1 | tee $logfile
 }
 
 source ./env.sh
