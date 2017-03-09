@@ -1,12 +1,10 @@
 #!/bin/bash
-export PREFIX=$SCRATCH/sw_test
-#export PREFIX=/usr/common/software
+export PREFIX=$SCRATCH/sw
 
 export TAG=`date "+%F"`
 export PKGROOT=`pwd`
 export NJOBS=10
 export TMPDIR=/tmp
-export TMPDIR=$SCRATCH/tmp
 
 # helper functions for builds
 to_lower() {
