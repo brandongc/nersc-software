@@ -5,7 +5,7 @@ source ./env.sh
 bash ./download.sh
     
 
-logfile=$PKGROOT/log/build.$TAG-$V.txt
+logfile=$PKGROOT/build.$TAG-$V.txt
 {
     BUILDDIR=$(mktemp -d --tmpdir $NAME.$V.XXXXXXX)
     echo "build dir: "$BUILDDIR && cd $BUILDDIR
@@ -13,7 +13,6 @@ logfile=$PKGROOT/log/build.$TAG-$V.txt
     VN=$(echo $V | tr "." "_")
     cp -r $PKGROOT/cp2k-$VN-branch/cp2k cp2k
     cd cp2k
-
     
     v=popt
 
@@ -28,7 +27,7 @@ logfile=$PKGROOT/log/build.$TAG-$V.txt
     mkdir -p $PREFIX/$NAME/$V-$TAG
     cp -r exe/$arch $PREFIX/$NAME/$V-$TAG/
     
-#    rm -r $BUILDDIR
+    rm -r $BUILDDIR
     
 } 2>&1 | tee $logfile
-#} > $logfile 2>&1
+
