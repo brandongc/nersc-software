@@ -9,4 +9,4 @@ or
 
 * run build.sh to install
 
-`./link-latesh.sh` updates the links in $PREFIX to point to the most recent build
+`./link-latest.sh` updates the links in $PREFIX to point to the most recent build
