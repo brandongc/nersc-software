@@ -5,6 +5,7 @@ export NAME='namd'
 source ../common.sh
 
 set_pe intel haswell
+module swap intel intel/16.0.3.210
 module load craype-hugepages8M
 module load fftw
 

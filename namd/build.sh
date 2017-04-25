@@ -4,8 +4,9 @@ set -e
 source ./env.sh
 bash ./download.sh
 
-logfile=$PKGROOT/build.$TAG.$V.log
-{
+
+function build_namd() {
+    
     BUILDDIR=$(mktemp -d --tmpdir $NAME.$V.XXXXXXX)
     echo "build dir: "$BUILDDIR && cd $BUILDDIR
     
@@ -22,7 +23,7 @@ logfile=$PKGROOT/build.$TAG.$V.log
     mv tcl8.5.9-linux-x86_64 tcl
     mv tcl8.5.9-linux-x86_64-threaded tcl-threaded
 
-    BUILD=CRAY-XC-intel
+    BUILD=$1
     ./config $BUILD --with-fftw3 --fftw-prefix $FFTW_DIR --charm-arch gni-crayxc-persistent
     cd $BUILD
     gmake -j $NJOBS
@@ -32,9 +33,23 @@ logfile=$PKGROOT/build.$TAG.$V.log
     make release     
     set -e
 
-    mkdir -p $PREFIX/$NAME/$V-$TAG
-    mv NAMD_"$V"_CRAY-XC-ugni $PREFIX/$NAME/$V-$TAG/
+    echo "installing release to:"$PREFIX/$NAME/$V-$TAG/$TG
+    mkdir -p $PREFIX/$NAME/$V-$TAG/$TG
+    mv NAMD_"$V"_* $PREFIX/$NAME/$V-$TAG/$TG
 
     rm -fr $BUILDDIR
+
+}
+
+
+
+logfile=$PKGROOT/build.$TAG.$V.log
+{
+
+    build_namd CRAY-XC-intel
+
+    set_pe intel mic-knl
+
+    build_namd CRAY-XC-KNL-intel
 
 } 2>&1 | tee $logfile
